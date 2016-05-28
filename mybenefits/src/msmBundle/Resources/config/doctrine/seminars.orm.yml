@@ -1,0 +1,30 @@
+msmBundle\Entity\seminars:
+    type: entity
+    table: null
+    repositoryClass: msmBundle\Entity\seminarsRepository
+    id:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+    fields:
+        seminarName:
+            type: string
+            length: 255
+            column: seminar_name
+        seminarTime:
+            type: datetime
+            column: seminar_time
+        seminarDescription:
+            type: text
+            column: seminar_description
+        seminarVideo:
+            type: string
+            length: 255
+            column: seminar_video
+        seminarHost:
+            type: string
+            length: 255
+            column: seminar_host
+    lifecycleCallbacks: {  }

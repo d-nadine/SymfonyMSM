@@ -1,0 +1,34 @@
+{
+    "name": "cunningsoft/chat-bundle",
+    "type": "symfony-bundle",
+    "description": "A chat bundle for Symfony2",
+    "keywords": ["chat", "communication"],
+    "homepage": "https://github.com/dmecke/ChatBundle",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Daniel Mecke",
+            "homepage": "https://github.com/dmecke"
+        },
+        {
+            "name": "Contributors",
+            "homepage": "https://github.com/dmecke/ChatBundle/contributors"
+        }
+    ],
+    "require": {
+        "symfony/symfony": "~2.3",
+        "doctrine/orm": ">=2.2.0",
+        "knplabs/knp-time-bundle": "1.3"
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-master": "0.4-dev"
+        }
+    },
+    "autoload": {
+        "psr-0": {
+            "Cunningsoft\\ChatBundle": ""
+        }
+    },
+    "target-dir": "Cunningsoft/ChatBundle"
+}

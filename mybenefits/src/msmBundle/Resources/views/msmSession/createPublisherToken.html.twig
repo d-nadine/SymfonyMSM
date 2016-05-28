@@ -1,0 +1,38 @@
+{% extends "::base.html.twig" %}
+
+{% block javascripts %}
+    <script type="text/javascript" src='https://static.opentok.com/v2/js/opentok.min.js'></script>
+    <script>
+        var apikey = "{{ apikey }}";
+        var sessionid = "{{ sessionid }}";
+        var token = "{{ token }}";
+    </script>
+
+    {% javascripts
+    '@msmBundle/Resources/public/js/publisher_msm.js'
+    %} 
+
+
+    <script type="text/javascript" src="{{ asset_url }}"></script>
+    {% endjavascripts %}
+
+{% endblock javascripts %}
+
+
+{% block body %}
+
+    <div id='msmContainer'>
+        <div id='msmButtons'>
+            <button type="button" class="resize">800 px</button>
+            <button type="button" class="disconnect">Disconnect</button>
+        </div>
+        <div id='adminPublisher'></div>
+        <div id='adminSubscriber'></div>
+
+{#
+<div id="ios-live"> <a href="http://webinar.collaborich.com/create-token-ios/live/1_MX40NDUxNjkzMn5-MTQ0MzQ2NzgzNTAzNn5UY214dllXV2Q1WHBUR3czbjh2NDdxdWZ-fg"> IOS LIVE EVENT</a></div>
+Download MYSECUREMEETING App to use your IOS Device
+<div id="ios-app"> <a href="https://itunes.apple.com/us/app/mysecuremeeting/id903225248?mt=8">Download MYSECUREMEETING App to view the LIVE feed on your IOS device</a></div>
+#}
+
+{% endblock %}

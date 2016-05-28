@@ -1,0 +1,28 @@
+{% extends "::base.html.twig" %}
+
+{% block title %} Live | IOS{% endblock %}
+
+{% block javascripts %}
+    {% javascripts
+    '@msmBundle/Resources/public/js/msm.js'
+    %} 
+    <script type="text/javascript" src="{{ asset_url }}"></script>
+    {% endjavascripts %}
+{% endblock javascripts %}
+
+{% block body %}
+
+    <div><h2>MySecureMeeting</h2></div>
+    <div id="msm-link">
+    <form style="display: inline" action="https://itunes.apple.com/us/app/mysecuremeeting/id903225248?mt=8"	method="get">
+	<button style="font-size: 1em">Download MYSECUREMEETING App to view the LIVE feed on your IOS device</button>
+    </form>
+    <div>
+    <form style="display: inline" action="msm://consultations.mybenefitslab.com/app.php/iosession/{{sessionid}}/{{token}}" method="get">
+	<button> CLICK TO VIEW LIVE INTERACTIVE ON IOS<button>
+    </form>
+    </div>
+    </div>
+
+{% endblock %}
+

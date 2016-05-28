@@ -1,0 +1,474 @@
+{% extends "::base.html.twig" %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script type="text/javascript" src='https://static.opentok.com/v2/js/opentok.min.js'></script>
+    <link rel="stylesheet" href="/css/TB.min.css">
+    <link rel="stylesheet" href="/css/origin_msm.css">
+    <script>
+        var apikey = "{{ apikey }}";
+        var sessionid = "{{ sessionid }}";
+        var token = "{{ token }}";
+    </script>
+
+    <script>
+	$('button#createArchiveLink').click(function () {
+	    $.get(Routing.generate('create_archive', { id: {{id}} }));
+	});
+
+(function ($) {
+var publisher;
+var subscribers = {};
+
+var res;
+var title;
+var streamid;
+var connectiondata;
+var msmconnect = [];
+var nid = 1;
+
+connectiondata = "Guest";
+
+var CHROME_EXT_ID = 'lphgddpdigmjhppebehndjhaifdbahlo';
+OT.setLogLevel(OT.DEBUG);
+OT.registerScreenSharingExtension('chrome', CHROME_EXT_ID);
+
+$("div#myPublisherDiv").prependTo("div#msmStreamsDiv");
+var subscribers = document.getElementById("msmStreamsDiv");
+    // subscribers = $("#msmStreamsDiv");
+var connectionCount = 0;
+var connections = 0;
+var streamCount = 0;
+var session = OT.initSession(apikey, sessionid);
+
+session.connect(token, function(error) {
+    function getParameterByName(name) {
+        name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
+        var regex = new RegExp("[\\?&]" + name + "=([^&#]*)"),
+            results = regex.exec(location.search);
+        return results == null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
+    }
+    
+
+var connectionId = session.connection.connectionId;
+var r = getParameterByName('r');
+
+if (r == 320) {
+    var publisherProperties = {resolution: "320x240", name: connectiondata + " - " + "<div id='kickId-"+connectionId+"'class='"+connectionId+"'>Disconnect</div>" + "<div id='talk-"+connectionId+"'class='"+connectionId+"'>Talk</div>" + "<div id='silence-"+connectionId+"'class='"+connectionId+"'>Silence</div>" + "<div id='handraise-"+connectionId+"' class='"+connectionId+"'><button>Raise Hand</button></div>"};
+} else if (r == 1280) {
+    var publisherProperties = {resolution: "1280x720", name: connectiondata + " - " + "<div id='kickId-"+connectionId+"'class='"+connectionId+"'>Disconnect</div>" + "<div id='talk-"+connectionId+"'class='"+connectionId+"'>Talk</div>" + "<div id='silence-"+connectionId+"'class='"+connectionId+"'>Silence</div>" + "<div id='handraise-"+connectionId+"' class='"+connectionId+"'><button>Raise Hand</button></div>"};
+} else {
+    var publisherProperties = {resolution: "640x480", name: connectiondata + " - " + "<div id='kickId-"+connectionId+"'class='"+connectionId+"'>Disconnect</div>" + "<div id='talk-"+connectionId+"'class='"+connectionId+"'>Talk</div>" + "<div id='silence-"+connectionId+"'class='"+connectionId+"'>Silence</div>" + "<div id='handraise-"+connectionId+"' class='"+connectionId+"'><button>Raise Hand</button></div>"};
+}
+
+
+var publisher = OT.initPublisher("myPublisherDiv", publisherProperties);
+       
+          session.publish(publisher);
+       
+          session.on("streamCreated", function(event) {
+                var el = document.createElement("div");
+
+                      $(el).addClass('subscriber-view view-'+ event.stream.videoType);
+
+                      subscribers.appendChild(el);
+                      // event.stream.videoType;
+                      session.subscribe(event.stream, el);
+                      $(el).prepend('<div class="go-fs"></div>');
+                      $('.go-fs').on('click', onGofs);
+          }); 
+
+          session.on('streamDestroyed', function(event) {
+            console.log("Stream " + event.stream.name + " ended. " + event.reason);
+            if (event.reason === 'mediaStopped') {
+               $('.view-screen').remove();
+               $('#screen-preview').hide();
+            }
+          });
+
+
+// Go Full-screen
+// Both video and screens can go full-screen now
+//$('.go-fs').on('click', onGofs);
+function onGofs(){
+    var elm = document.getElementById($(this).parent().attr('id'));
+    var reqFullScreen = elm.requestFullScreen || elm.webkitRequestFullScreen || elm.mozRequestFullScreen || elm.msRequestFullScreen || elm.oRequestFullScreen;
+    if (reqFullScreen) {
+      reqFullScreen.apply(elm);
+    } else {
+      alert("Looks like your browser cannot go full-screen. Please update to latest version of Firefox/Chrome.");
+    }
+}
+//$('.no-fs').on('click', onNofs);
+function onNofs(){
+
+    if (document.exitFullscreen)
+        document.exitFullscreen();
+    else if (document.webkitCancelFullScreen)
+        document.webkitCancelFullScreen();
+    else if (document.mozCancelFullScreen)
+        document.mozCancelFullScreen();
+    else if (document.msExitFullscreen)
+        document.msExitFullscreen();
+}
+
+// A Hack to allow proper full-width-height 
+// screen-share. `OT_subscriber` CSS styles
+// are conflicting with fullscreen classes.
+// Till the moment layout is not re-designed.
+function onFs(){
+  var isFullScreen = document.fullScreen || document.mozFullScreen || document.webkitIsFullScreen;
+  if(isFullScreen){
+    $('.go-fs').removeClass('go-fs').addClass('no-fs');
+    $('.subscriber-view').removeClass('OT_subscriber');
+    $('.no-fs').on('click', onNofs);
+  }else{
+    $('.no-fs').removeClass('no-fs').addClass('go-fs');
+    $('.subscriber-view').addClass('OT_subscriber');
+    $('.go-fs').on('click', onGofs);
+  }
+}
+$(document).on('webkitfullscreenchange mozfullscreenchange fullscreenchange MSFullscreenChange', onFs);
+
+
+$('#screen-preview').hover(function() {
+        $(this).addClass('transition');
+    }, function() {
+        $(this).removeClass('transition');
+    });
+
+$("div[id^='kickId']").on('click', function(e) {  
+   var kickId = $(this).attr("class");
+  session.forceDisconnect(kickId);
+});
+
+$('#kickall').on('click', function(e) {  
+   session.signal(
+  {
+    type:"disconnect"
+  });
+});
+
+$("div[id^='silence']").on('click', function(e) {  
+    var silenceId = $(this).attr("class");
+   var silencewho  = msmconnect.filter(function(o){return o.connectionId == silenceId;} 
+  );
+
+session.signal(
+  {
+   type:"silence",
+   to: silencewho[0],
+   data:"quiet"
+  }); 
+});
+
+$('#muteall').on('click', function(e) {  
+
+session.signal(
+  {
+   type:"muteall",
+   data:"all quiet"
+  }); 
+});
+
+$('#unmuteall').on('click', function(e) {  
+
+session.signal(
+  {
+   type:"unmuteall",
+   data:"all talk"
+  }); 
+});
+
+
+$("div[id^='talk']").on('click', function(e) {  
+    var talkId = $(this).attr("class");
+   var talkwho  = msmconnect.filter(function(o){return o.connectionId == talkId;} 
+  );
+
+session.signal(
+  {
+   type:"talk",
+   to: talkwho[0],
+   data:"talk"
+  }); 
+});
+
+$("div[id^='handraise']").on('click', function(e) {  
+    var raiseId = $(this).attr("class");
+   var raisewho  = msmconnect.filter(function(o){return o.connectionId == raiseId;} 
+  );
+
+session.signal(
+  {
+   type:"handraise",
+   to: raisewho[0],
+   data:"Hand raised by: "+raisewho[0]['connectionId']
+  }); 
+});
+
+session.on(
+  {
+    connectionCreated: function(event) {
+      
+          connectionCount++;
+          connections++;
+          connectionId = event.connection.connectionId;
+          msmconnect.push(event.connection);      
+
+    var d = new Date();
+    var n1 = d.getTime();
+    var n = Math.floor(n1/1000);
+    xmlhttp=new XMLHttpRequest();
+    xmlhttp.open("GET","/msm-sessions/connectioncreated/"+sessionid+"/"+connectionId+"/"+n+"/"+connectionCount+"/"+nid+"/"+title,true);
+    xmlhttp.send();    
+
+
+    },
+    
+    connectionDestroyed: function(event) {
+      
+      
+      var d = new Date();
+      var n1 = d.getTime();
+      var n = Math.floor(n1/1000);
+      xmlhttp=new XMLHttpRequest();
+      xmlhttp.open("GET","/msm-sessions/connectionDestroyed/"+sessionid+"/"+connectionId+"/"+n+"/"+connectionCount,true);
+      xmlhttp.send();    
+      connectionCount--;
+
+
+    },    
+    
+  });
+
+session.on("signal:time", function(event) {
+    connectionId =   event.from.id;
+    var d = new Date();
+    var n1 = d.getTime();
+    var n = Math.floor(n1/1000);
+    xmlhttp=new XMLHttpRequest();
+    xmlhttp.open("GET","/msm-sessions/connectiondestroyed/"+sessionid+"/"+connectionId+"/"+n+"/"+connectionCount,true);
+    xmlhttp.send();
+      console.log("Signal sent from connection: " + event.from.id);
+  
+});
+
+session.on("signal:talk", function(event) {
+publisher.publishAudio(true);
+});  
+
+session.on("signal:unmuteall", function(event) {
+publisher.publishAudio(true);
+});
+
+session.on("signal:silence", function(event) {
+publisher.publishAudio(false);
+});
+
+session.on("signal:muteall", function(event) {
+publisher.publishAudio(false);
+});
+
+session.on("signal:disconnect", function(event) {
+connectionId =  session.connection.connectionId;
+session.forceDisconnect(connectionId);
+});
+  
+session.on("signal:handraise", function(event) {
+//connectionId =  session.connection.connectionId;
+console.log(event.data);
+});
+
+}); 
+
+setInterval(function(){
+    session.signal({
+        type: "time",
+        
+      },
+      function(error) {
+        if (error) {
+          console.log("signal error: " + error.reason);
+        } else {
+        }
+      }
+      
+    );
+      },60000);
+
+	var hideShareBtnOnUnavailable = true;
+//$('.install-btn').hide();
+// $('.install-txt').hide();
+function screenshare() {
+      OT.checkScreenSharingCapability(function(response) {
+        if (!response.supported || response.extensionRegistered === false) {
+
+          // Hide share button if Screensharing is not supported
+          // by browser
+          if(hideShareBtnOnUnavailable){
+            //$('#shareScreen').hide();
+          }
+          alert('This browser does not support screen sharing.');
+
+        } else if (response.extensionInstalled === false) {
+
+          $('.install-btn').show();
+          $('.install-txt').show();
+
+          alert('Please install the screen sharing extension and load your app over https.');
+        
+        } else {
+         
+          // Screen sharing is available. Publish the screen.
+          var screenSharingPublisher = OT.initPublisher(
+
+            'screen-preview',
+            //
+            {videoSource : 'screen', audioSource: null},
+            // screen, application or window. It's okay to just pass "screen"
+            // for Chrome users, as it shows a beautiful dialog for video
+            // source selection 
+            function(error) {
+              if (error) {
+                alert('Something went wrong: ' + error.message);
+              } else {
+                session.publish(
+                  screenSharingPublisher,
+                  function(error) {
+                    if (error) {
+                      alert('Something went wrong: ' + error.message);
+                    }else{
+                      $('#screen-preview').append('<h3 class="status">You\'re sharing...</h3>');
+                      $('#screen-preview').show();
+                      alert('Screen is available to your guests now!');
+                    }
+                  });
+              }
+            });
+          }
+        });
+}
+
+$('#shareScreen').click(screenshare);
+})(jQuery); 
+
+    </script>
+
+    {% javascripts
+    '@msmBundle/Resources/public/js/admin_msm.js'
+    %} 
+
+
+    <script type="text/javascript" src="{{ asset_url }}"></script>
+    {% endjavascripts %}
+
+{% endblock javascripts %}
+
+{% block buttonright %}
+    <div style="float: right;">
+	<a href="/app.php/update-session/{{id}}" style="float: right; margin: 10px; width: 43px; height: 43px; background: transparent url('/img/files/top-edit.png') no-repeat scroll 0px 0px;"></a>
+	<a href="/app.php/delete-session/{{id}}" style="float: right; margin: 10px; width: 43px; height: 43px; background: transparent url('/img/files/top-delete.png') no-repeat scroll 0px 0px;"></a>
+	<a href="/app.php/create-token-ios-a/{{name}}/{{id}}" style="float: right; margin: 10px; width: 43px; height: 43px; background: transparent url('/img/files/top-ios.png') no-repeat scroll 0px 0px;"></a>
+	<a href="/app.php/publisher-token/{{name}}/{{id}}" style="float: right; margin: 10px; width: 43px; height: 43px; background: transparent url('/img/files/top-link.png') no-repeat scroll 0px 0px;"></a>
+    </div>
+{% endblock buttonright %}
+
+{% block body %}
+    <div id='msmContainer'>
+        <div id='msmButtons'>
+            <button type="button" id="createArchiveLink" class="toolbar record">Record</button> 
+            <button type="button" id="closeArchiveLink" class="toolbar stop_record">Stop Recording</button>
+            <button type="button" value="Share" id="shareScreen" class="toolbar screenshare" title="Share Screen..."></button>
+	<div id="screen_video_size">
+            <button type="button" id="manager_files" class="toolbar product" title="File...">Product</button>
+	    <div style="display: none;" class="content_files">
+		<div class="content">
+		    <h2>Files</h2>
+		    <!--<input id="addnetwork_keytext" type="text" class="form-control" style='width:332px' readonly onmousedown="onInput('addnetwork_keylabel','addnetwork_key',true);$('#addnetwork_key').click()" value = "No file chosen">-->
+		<form action="/app.php/list-files" id="file_form" method="post" enctype="multipart/form-data">
+		    <input name="addnetwork_key" id="addnetwork_key" type="file" style="display:none;" onchange="onKeyUpload()">
+<script>
+var keyfiles;
+function prepareUploadKey(event){keyfiles = event.target.files;}
+function onKeyUpload()
+{
+    tmpval = $('#addnetwork_key').val();
+    n = tmpval.lastIndexOf('\\');
+    if (n < 0)
+        n = tmpval.lastIndexOf('/');
+    if (n >= 0)
+        tmpval = tmpval.substring(n+1, tmpval.length);
+    //$('#addnetwork_keytext').val(tmpval == "" ? "No file chosen" : tmpval);
+    document.getElementById('file_form').submit();
+}
+function onFileUpload(){$('#addnetwork_key').click();}
+$('#addnetwork_key').on('change', prepareUploadKey);
+</script>
+		    <div class="file_upload" onmousedown="onFileUpload();">- Upload</div><!--<div class="file_download">- Download</div>-->
+		</form>
+		</div>
+	    </div>
+	</div>
+<!--	<div id="screen_video_size">
+	    <button value="Screen Video" id="manager_screen_video_size" class="toolbar" type="button"></button>
+	    <div style="display: none;" class="content_screen_video_size">
+		<div class="content">
+		    <h2>Chose Screen Size</h2>
+		    <div class="one"></div><div class="two"></div><div class="four-n"></div><div class="four"></div>
+		</div>
+	    </div>
+	</div>
+-->
+	<a href="https://chrome.google.com/webstore/detail/msm-screen-sharing/lphgddpdigmjhppebehndjhaifdbahlo" class="toolbar chrome" style="float: right;"></a>
+	<a href="/MSMScreenShare.xpi" class="toolbar firefox" style="float: right;"></a>
+    </div>
+        <div class="group_publisher">
+            <div class="stream-container" id="myPublisherDiv"></div>
+	    <div id="publisher"></div>
+	    <div id="msmStreamsDiv" {%if beta==1 %}style="display: none;"{%endif%}></div>
+     	    <div id="screen-preview" style="display:none"></div>
+<!--	    <div id="screen-preview" style="padding-top: 30px; width: 400px; height: 300px;"></div>-->
+	    <div id="adminPublisher" {%if beta==1 %}style="display:none;"{%endif%}></div>
+	    <div id="msmSubScriber"></div>
+	    <div id="msmContainer"></div>
+	    <div id="stoparchive"></div>
+        </div>
+        {%if beta==1 %}<iframe style="box-shadow: 0px 0px 5px 0px #000; margin: 5%; margin-left: 20%;" width=110% height=400 frameborder=1 src='https://live.translateyourworld.com/session/UserSessionLogin?sessionName=subtitles'></iframe>{%endif%}
+    </div>
+
+    <script>
+	var screen_size_leave = 0;
+	$("#manager_screen_video_size").mouseover(function(){
+	    $(".content_screen_video_size").show();
+	});
+	$(".content_screen_video_size").mouseover(function(){
+	    screen_size_leave = 1;
+	    $(".content_screen_video_size").show();
+	});
+	$("#manager_screen_video_size").mouseleave(function(){
+	    if(screen_size_leave == 0)
+		$(".content_screen_video_size").hide();
+	});
+	$(".content_screen_video_size").mouseleave(function(){
+	    screen_size_leave = 0;
+	    $(".content_screen_video_size").hide();
+	});
+	var files_leave = 0;
+	$("#manager_files").mouseover(function(){
+	    $(".content_files").show();
+	});
+	$(".content_files").mouseover(function(){
+	    files_leave = 1;
+	    $(".content_files").show();
+	});
+	$("#manager_files").mouseleave(function(){
+	    if(files_leave == 0)
+		$(".content_files").hide();
+	});
+	$(".content_files").mouseleave(function(){
+	    files_leave = 0;
+	    $(".content_files").hide();
+	});
+    </script>
+{% endblock %}

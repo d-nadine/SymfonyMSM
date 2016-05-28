@@ -1,0 +1,11 @@
+{% extends "::base.html.twig" %}
+
+{% block title %}Create Session{% endblock %}
+
+{% block body %}
+<h3>Create MSM Session</h3>
+{{ form_start(form) }}
+    {{ form_widget(form) }}
+    <input type="submit" />
+{{ form_end(form) }}
+{% endblock %}

@@ -1,0 +1,14 @@
+{% extends "::base.html.twig" %} 
+
+{% block body %}
+<h2>Users</h2>
+
+<div id="subscriber-sessions">
+<h2>{{msg}}</h2>
+{% for i in files %}
+    <a>{{i}}
+    </a>
+{% endfor %}
+</div>
+
+{% endblock %}

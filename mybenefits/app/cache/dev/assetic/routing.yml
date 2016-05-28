@@ -1,0 +1,5 @@
+_assetic:
+    resource: .
+    type: assetic
+_app:
+    resource: '/home/venus/Downloads/Mary Lee Weir/20160402/mybenefits/app/config/routing_dev.yml'

@@ -1,0 +1,19 @@
+{% extends "::base.html.twig" %}
+
+{% block title %}Admin IOS Tokens | IOS{% endblock %}
+
+{% block body %}
+
+<div id="msm-link">
+<form style="display: inline" action="https://itunes.apple.com/us/app/mysecuremeeting/id903225248?mt=8"	method="get">
+  <button style="font-size: 1em">Download MYSECUREMEETING App to view the LIVE feed on your IOS device</button>
+</form>
+
+<div>
+<form style="display: inline" action="msm://consultations.mybenefitslab.com/app.php/iosession/{{sessionid}}/{{token}}" method="get">
+ <button> CLICK TO START IOS SESIONS<button>
+</form>
+</div>
+</div>
+{% endblock %}
+

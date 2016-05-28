@@ -1,0 +1,263 @@
+<!DOCTYPE HTML>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+{% if user.id %}
+<title> MSM MyBenefitsLab </title>
+{% else %}
+<title> Member Login </title>
+{% endif %}
+
+    {% block stylesheets %}
+	{% stylesheets
+	    'bundles/msm/css/msm.css'
+	    'bundles/msm/css/styles.css'
+	    filter='cssrewrite'
+	%}
+	<!--<link rel="stylesheet" href="{{ asset_url }}" />-->
+	<style scoped>@import url("{{ asset_url }}");</style>
+	{% endstylesheets %}
+<!--
+	<link rel="stylesheet" href="{{ asset('css/app.css') }}">
+	<link rel="stylesheet" href="{{ asset('css/front.css') }}">
+        <link rel="stylesheet" href="{{ asset('css/normalize.css') }}">
+-->
+<!--
+	<style scoped>@import url("{{ asset('css/app.css') }}");</style>
+	<style scoped>@import url("{{ asset('css/front.css') }}");</style>
+	<style scoped>@import url("{{ asset('css/normalize.css') }}");</style>
+-->
+    {% endblock %}
+
+<meta name="description" content="MyBenefitsLab" />
+<meta name="keywords" content="MyBenefitsLab" />
+<meta name="robots" content="INDEX,FOLLOW" />
+<link rel="icon" href="http://mybenefitslab.com/media/favicon/stores/82/favicon.ico" type="image/x-icon" />
+<link rel="shortcut icon" href="http://mybenefitslab.com/media/favicon/stores/82/favicon.ico" type="image/x-icon" />
+<meta name="p:domain_verify" content="e046baa8afb5e109fddad24d0bf16b49"/>
+<!--[if lt IE 7]>
+<script type="text/javascript">
+//<![CDATA[
+    var BLANK_URL = 'http://mybenefitslab.com/js/blank.html';
+    var BLANK_IMG = 'http://mybenefitslab.com/js/spacer.gif';
+//]]>
+</script>
+<![endif]-->
+<link rel="stylesheet" type="text/css" href="/mybenefits/site.css" media="all" />
+<!--<script type="text/javascript" src="/mybenefits/site.js"></script>-->
+
+<!--<script type="text/javascript">
+//<![CDATA[
+Mage.Cookies.path     = '/';
+Mage.Cookies.domain   = '.mybenefitslab.com';
+//]]>
+</script>-->
+
+<!--<script type="text/javascript">
+//<![CDATA[
+optionalZipCountries = [];
+//]]>
+</script>-->
+<!-- BEGIN GOOGLE ANALYTICS CODEs -->
+<!--<script type="text/javascript">
+//<![CDATA[
+    var _gaq = _gaq || [];
+    
+_gaq.push(['_setAccount', 'UA-70487187-1']);
+
+_gaq.push(['_trackPageview']);
+    
+    (function() {
+        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+
+//]]>
+</script>-->
+<!-- END GOOGLE ANALYTICS CODE -->
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+<!--[if lt IE 9]>
+  <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+  <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+<![endif]-->
+<!--<script type="text/javascript">//<![CDATA[
+        var Translator = new Translate([]);
+        //]]></script>    <link href='http://fonts.googleapis.com/css?family=Noto+Sans:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+-->
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+</head>
+
+<body class=" customer-account-login">
+
+<div class="container">
+    <header role="banner" class="text-center-xs">
+                <h1 class="logo"><strong>MyBenefitsLab LLC</strong><a href="/app.php/profile" title="MyBenefitsLab LLC" class="logo"><img src="http://mybenefitslab.com/skin/frontend/boilerplate/default/images/logo-mbl.png" alt="MyBenefitsLab LLC" /></a></h1>
+                <div class="quick-access right">
+            <div class="clearfix">
+                <div class="top-link-block hidden-xs right">
+                  <div class="hidden-xs">
+        <!--<a href="http://mybenefitslab.com/mybenefitslab_storeview/customer/account/create/" class="sign-up">Sign Up</a>
+        <a href="http://mybenefitslab.com/mybenefitslab_storeview/customer/account/login/" class="log-in">Login</a>-->
+				{% if user.id %}
+                                        <a class="log-in" style="margin-left:1.5em;" title="Mysecuremeeting Log Out" href="/app.php/logout">Log Out</a>
+                                        <a class="sign-up" title="Mysecuremeeting Archives" href="/app.php/list-archives/{% if id %}{{id}}{% else %}0{% endif %}">Archives</a>
+                                        {% if user.id==1 %}<a class="sign-up" title="Mysecuremeeting Sessions" href="/app.php/admin-list-sessions">Sessions</a>
+					{% else %}<a class="sign-up" title="Mysecuremeeting Sessions" href="/app.php/list-sessions">Sessions</a>
+					{% endif %}
+                                        <a class="sign-up" title="Mysecuremeeting Dashboard" href="/app.php/profile">Dashboard</a>
+				{% else %}
+					<a class="sign-up" title="Mysecuremeeting Sign Up" href="/app.php/register">Sign Up</a>
+					<a class="log-in" title="Mysecuremeeting Log In" href="/app.php/login">Log In</a>
+				{% endif %}
+      </div>
+                                        <div class="welcome-msg right">
+                                            </div>  
+                </div>
+            </div>
+        </div>
+            </header>
+</div>
+
+<div class="nav-topbar-wide">
+    <div class="container">
+        <div class="row">
+            <nav class="navbar navbar-default navbar-main" role="navigation">
+                <div class="navbar-header">
+                    <a class="navbar-brand" href="javascript:void(0);" data-toggle="collapse" data-target=".navbar-main-collapse">
+                        MENU
+                    </a>
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-main-collapse">
+                        <span class="sr-only">Toggle Navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                       
+                    </button>
+                </div>
+
+                <div class="collapse navbar-collapse navbar-main-collapse">
+                                     
+			                        <ul class="nav navbar-nav">
+			    <li class="visible-xs"><a href="http://mybenefitslab.com/mybenefitslab_storeview/customer/account/login"><span>LOGIN</span></a></li>
+                            <li class="visible-xs"><a href="http://mybenefitslab.com/mybenefitslab_storeview/customer/account/create"><span>SIGN UP</span></a></li>
+		            <li class=""><a href="http://mybenefitslab.com/mybenefitslab_storeview/"><span>HOME</span></a></li>
+			    <li class="level1 nav4-1 first"><a href="http://mybenefitslab.com/mybenefitslab_storeview/shop"><span>SHOP</span></a></li>
+			    <li class=""><a href="http://mybenefitslab.com/mybenefitslab_storeview/wellness-tools"><span>WELLNESS TOOLS</span></a></li>
+			    <li class=""><a href="http://mybenefitslab.com/mybenefitslab_storeview/why-me"><span>WHY ME</span></a></li>
+                            <li class=""><a href="http://mybenefitslab.com/mybenefitslab_storeview/contacts"><span>CONTACT US</span></a></li>
+							<li class="level1 nav4-2 ">
+				<a href="http://mybenefitslab.com/mybenefitslab_storeview/checkout/cart"><b class="fa fa-shopping-cart"></b> <span></span></a>
+			     </li>
+			    
+                        </ul>
+			                </div>
+            </nav>
+        </div>
+    </div>
+</div>
+
+    <div class="page_body clearfix">
+        <div class="content_left" style="padding-top: 1%; width: 100%;">
+	    {% block buttonright %}{% endblock %}
+	    {% block body %}{% endblock %}
+	    <div style="width: 90%;">
+		<a class="button" href="https://itunes.apple.com/us/app/mysecuremeeting/id903225248?mt=8">Download MySecureMeeting™ iPhone/iPad App</a>
+	    </div>
+        </div>
+    </div>
+
+<div class="footer-wide" style="margin-top: 2%;">
+    <div class="container">
+        <footer role="contentinfo">
+    	<div class="clearfix footer-inside-top text-center-xs">
+        	<ul class="footer-links">
+        	    <li><a href="http://mybenefitslab.com/mybenefitslab_storeview/privacy-policy/">Privacy Policy</a></li>
+        	    <li><a href="http://mybenefitslab.com/mybenefitslab_storeview/terms-and-conditions/">Terms &amp; Conditions</a></li>
+        	    <li><a href="http://mybenefitslab.com/mybenefitslab_storeview/hipaa-notice/">HIPPA Policy</a></li>
+        	    <!--<li><a href="http://mybenefitslab.com/mybenefitslab_storeview/about-us/">About Us</a></li>-->
+        	    <li><a href="http://mybenefitslab.com/mybenefitslab_storeview/contacts/">Contact Us</a></li>
+        	</ul>
+            </div>
+    	<div class="clearfix footer-inside-bottom">
+
+    	    <div class="col-xs-12 col-sm-10 text-center-xs">
+    		<p class="copyright">&copy; 2015 All Right Reserved MyBenefitsLab LLC</p>
+    	    </div>
+    	    <div class="col-xs-12 col-sm-2 text-center-xs footer-inside-bottom-inside">
+	    	<ul class="social-networks">
+	    	    <li><a href="https://www.facebook.com/MyBenefitsLab" target="_blank"><span class="hidden">Facebook</span> <b class="fa fa-facebook-square"></b></a></li>
+	    	    <!--<li><a href="" target="_blank"><span class="hidden">LinkedIn</span> <b class="fa fa-linkedin-square"></b></a></li>-->
+	    	    <li><a href="http://www.pinterest.com/mybenefitslab/" target="_blank"><span class="hidden">Pinterest</span> <b class="fa fa-pinterest-square"></b></a></li>
+	    	    <li><a href="https://twitter.com/mybenefitslab" target="_blank"><span class="hidden">Twitter</span> <b class="fa fa-twitter-square"></b></a></li>
+	    	    <!--<li><a href="#" target="_blank"><span class="hidden">Instagram</span> <b class="fa fa-instagram"></b></a></li>
+	    	    <li><a href="#" target="_blank"><span class="hidden">Youtube</span> <b class="fa fa-youtube-square"></b></a></li>-->
+	    	</ul>
+	        </div>
+            </div>
+        </footer>
+    </div>
+</div>
+
+{% block javascripts %}
+    {% javascripts
+    '@msmBundle/Resources/public/js/script.js'
+    '@msmBundle/Resources/public/js/videojs.playlist.js'
+    %}
+    <script src="{{ asset('bundles/fosjsrouting/js/router.js') }}"></script>
+    <script src="{{ path('fos_js_routing_js', {'callback': 'fos.Router.setData'}) }}"></script>
+
+    <script src="{{ asset_url }}"></script>
+    {% endjavascripts %}
+ <script> (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){ (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o), m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m) })(window,document,'script','//www.google-analytics.com/analytics.js','ga'); ga('create', 'UA-68253483-1', 'auto'); ga('send', 'pageview'); </script>
+
+    
+{% endblock %}
+</body>
+<style>
+/* SHARE-SCREEN - Adds style to related components - @algoworks */
+
+input#shareScreen {
+    background-image: url("images/msm_share_icon.png") !important;
+    background-repeat: no-repeat;
+    background-color: #f78f21;
+    border: 0 none;
+    cursor: pointer;
+    text-indent: -9999px;
+    width: 101px;
+    height: 97px;
+    background-position: 15px 15px;
+}
+
+.install-btn{
+  padding-left: 50px !important;
+  background-repeat: no-repeat !important;
+  background-position: 10px 5px !important;
+ 
+}
+.install-btn.firefox{
+  background-image: url("images/msm_firefox.png") !important;
+}
+.install-btn.chrome{
+  background-image: url("images/msm_chrome.png") !important;
+}
+
+.subscriber-view:-webkit-full-screen{
+  width: 100% !important;
+  height: 100% !important;
+}
+.subscriber-view:-moz-full-screen{
+  width: 100% !important;
+  height: 100% !important;
+}
+.subscriber-view:-ms-fullscreen{
+  width: 100% !important;
+  height: 100% !important;
+}
+.subscriber-view:fullscreen{
+  width: 100% !important;
+  height: 100% !important;
+}
+</style>
+
+</html>

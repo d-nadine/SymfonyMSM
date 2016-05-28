@@ -1,0 +1,26 @@
+{% extends "::base.html.twig" %}
+{% trans_default_domain 'FOSUserBundle' %}
+
+{% block body %}
+<h2>Admin sessions</h2>
+<div id="admin-sessions">
+{% for i in sessions %}
+    {% set foo = i.sessionName|split(',', 3) %}
+    {% if foo[0]|number_format == user.id or user.id == 1 %}
+    <div>
+    <a href="/app.php/admin-token{%if foo[1]|number_format == 1%}-beta{%endif%}/{{foo[2]}}/{{i.id}}">{{i.id}} - Start <br>
+	{% if foo[2]|length > 12 %}
+	    {{foo[2]|slice(0, 9)}}...
+	{% else %}
+	    {{foo[2]}}
+	{% endif %}
+	<br>Session
+	{% if foo[1]|number_format == 1 %}
+	    (Beta)
+	{% endif %}
+    </a>
+    </div>
+    {% endif %}
+{% endfor %}
+</div>
+{% endblock %}

@@ -1,0 +1,32 @@
+{% extends "::base.html.twig" %} 
+
+{% block title %} List Archives {% endblock %}
+{% block body %}
+<div id="admin-sessions">
+{% for i in archives %}
+    {% set foo = i.name|split(',', 4) %}
+    {% if foo[0]|number_format == user.id or user.id == 1 %}
+    <div>
+    <a href="/app.php/watch-archive/{{i.archiveid}}">
+	{% if foo[3]|length > 12 %}
+	    {{foo[3]|slice(0, 9)}}...
+	{% else %}
+	    {{foo[3]}}
+	{% endif %}<br>
+        {{i.date.date|date('m-d-Y h:i:s')}}
+    </a>
+    </div>
+    {% endif %}
+{% endfor %}
+</div>
+
+{#
+  <video id="my-video-vjs-playlist" class="video-js vjs-track" controls preload="auto"  data-setup="{}">
+    <source src="https://s3.amazonaws.com/satyamsm/44516932/8440d88f-c079-4e1f-b842-22fe0837ebb7/archive.mp4" type='video/mp4'>
+    <p class="vjs-no-js">
+      To view this video please enable JavaScript, and consider upgrading to a web browser that
+      <a href="http://videojs.com/html5-video-support/" target="_blank">supports HTML5 video</a>
+    </p>
+  </video>
+#} 
+{% endblock %}

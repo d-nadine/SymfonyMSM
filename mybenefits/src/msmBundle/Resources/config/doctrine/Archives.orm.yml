@@ -1,0 +1,23 @@
+msmBundle\Entity\Archives:
+    type: entity
+    table: null
+    repositoryClass: msmBundle\Entity\ArchivesRepository
+    id:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+    fields:
+        archiveid:
+            type: string
+            length: 255
+        name:
+            type: string
+            length: 255
+        date:
+            type: datetime
+        sessionid:
+            type: string
+            length: 255
+    lifecycleCallbacks: {  }

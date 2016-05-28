@@ -1,0 +1,27 @@
+{% extends "::base.html.twig" %}
+
+{% block title %}MySecureMeeting Webinar{% endblock %}
+
+{% block body %}
+<h3>MySecureMeeting Webinar</h3>
+
+<div id="subscriber-sessions">
+{% for i in webinars %}
+    {% set foo = i.seminarName|split(',', 2) %}
+    {% if foo[0]|number_format == user.id or user.id == 1 %}
+    <a href="/view-webinar/{{i.id}}">
+        Host : {{i.seminarHost}}<br>
+        Join : {{foo[1]}}<br>
+	{% if i.seminarDescription|length > 12 %}
+	    {{i.seminarDescription|slice(0, 9)}}...
+	{% else %}
+	    {{i.seminarDescription}}
+	{% endif %}
+    </a>
+    {% endif %}
+{% endfor %}
+
+</div>
+
+{% endblock %}
+

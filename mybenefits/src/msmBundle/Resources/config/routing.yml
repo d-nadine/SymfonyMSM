@@ -1,0 +1,147 @@
+fos_user:
+    resource: "@FOSUserBundle/Resources/config/routing/all.xml"
+    
+fos_js_routing:
+    resource: "@FOSJsRoutingBundle/Resources/config/routing/routing.xml"
+
+msm_homepage:
+    path:     /
+    defaults: 
+     _controller: msmBundle:Default:index
+
+create_session1:
+    path:     create-session
+    defaults:  
+     _controller: msmBundle:msmSession:createSession 
+     apiKey: 44516932
+     apiSecret: '6aa54cb99b694d28b3b0257db7e1b1a5e25aa19e'
+     
+create_session_beta:
+    path:     create-session-beta
+    defaults:  
+     _controller: msmBundle:msmSession:createBetaSession 
+     apiKey: 44516932
+     apiSecret: '6aa54cb99b694d28b3b0257db7e1b1a5e25aa19e'
+     
+list_sessions_admin:
+    path:     admin-list-sessions
+    defaults: { _controller: msmBundle:msmSession:listSessionsAdmin }
+    
+list_users:
+    path:     list-users
+    defaults: { _controller: msmBundle:msmSession:listUsers }
+    
+list_files:
+    path:     list-files
+    defaults: { _controller: msmBundle:msmSession:listFiles }
+    
+upload_photo:
+    path:     upload-photo
+    defaults: { _controller: msmBundle:msmSession:uploadPhoto }
+    
+list_sessions:
+    path:     list-sessions
+    defaults: { _controller: msmBundle:msmSession:listSessions }
+
+msm_session:
+    path:     msm-session
+    defaults: { _controller: msmBundle:msmSession:msmSession }
+
+create_token:
+    path:     create-token/{name}/{id}
+    defaults: 
+     _controller: msmBundle:msmSession:createToken
+     apiKey: 44516932
+     apiSecret: '6aa54cb99b694d28b3b0257db7e1b1a5e25aa19e'
+     
+admin_token:
+    path:     admin-token/{name}/{id}
+    defaults: 
+     _controller: msmBundle:msmSession:adminToken
+     apiKey: 44516932
+     apiSecret: '6aa54cb99b694d28b3b0257db7e1b1a5e25aa19e'     
+
+admin_token_beta:
+    path:     admin-token-beta/{name}/{id}
+    defaults: 
+     _controller: msmBundle:msmSession:adminTokenBeta
+     apiKey: 44516932
+     apiSecret: '6aa54cb99b694d28b3b0257db7e1b1a5e25aa19e'     
+
+publisher_token:
+    path:     publisher-token/{name}/{id}
+    defaults:
+     _controller: msmBundle:msmSession:createPublisherToken
+     apiKey: 44516932
+     apiSecret: '6aa54cb99b694d28b3b0257db7e1b1a5e25aa19e'
+
+create_archive:
+    path:     create-archive/{id}
+    defaults: 
+     _controller: msmBundle:msmSession:createArchive
+     apiKey: 44516932
+     apiSecret: '6aa54cb99b694d28b3b0257db7e1b1a5e25aa19e'
+    options:
+        expose: true
+
+close_archive:
+    path:     close-archives/{archiveid}
+    defaults:
+     _controller: msmBundle:msmSession:closeArchives
+     apiKey: 44516932
+     apiSecret: '6aa54cb99b694d28b3b0257db7e1b1a5e25aa19e'
+
+list_archives:
+    path:     list-archives/{id}
+    defaults: 
+     _controller: msmBundle:msmSession:listArchives
+     apiKey: 44516932
+     apiSecret: '6aa54cb99b694d28b3b0257db7e1b1a5e25aa19e'
+     
+watch_archive:
+    path:     watch-archive/{archiveid}
+    defaults: 
+     _controller: msmBundle:msmSession:watchArchive
+
+ios_token:
+    path:     create-token-ios/{name}/{id}
+    defaults: 
+     _controller: msmBundle:msmSession:iosToken
+     apiKey: 44516932
+     apiSecret: '6aa54cb99b694d28b3b0257db7e1b1a5e25aa19e'
+
+aios_token:
+    path:     create-token-ios-a/{name}/{id}
+    defaults:
+     _controller: msmBundle:msmSession:AiosToken
+     apiKey: 44516932
+     apiSecret: '6aa54cb99b694d28b3b0257db7e1b1a5e25aa19e'
+
+delete_session:
+    path:     delete-session/{id}
+    defaults: 
+     _controller: msmBundle:msmSession:deleteSession
+     requirements:
+        id:  \d+
+
+update_session:
+    path:     update-session/{id}
+    defaults: 
+     _controller: msmBundle:msmSession:updateSession
+     requirements:
+        id:  \d+
+
+listwebinar:
+    path:     list-webinar
+    defaults: { _controller: msmBundle:webinar:listwebinar }
+
+createwebinar:
+    path:     create-webinar
+    defaults: { _controller: msmBundle:webinar:createwebinar }
+
+viewwebinar:
+    path:     view-webinar/{id}
+    defaults: 
+     _controller: msmBundle:webinar:viewwebinar
+     requirements:
+        id:  \d+

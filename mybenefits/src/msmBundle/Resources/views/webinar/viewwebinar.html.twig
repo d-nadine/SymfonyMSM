@@ -1,0 +1,49 @@
+{% extends "::base.html.twig" %}
+
+{% block title %}Webinar{{webinar.seminarName}}{% endblock %}
+
+{% block body %}
+<h3>{{webinar.seminarHost}}</h3>
+<div id="subscriber-sessions" style="padding-left:0%">
+	<ul id="navigation" style="width: 100%; padding-bottom: 10%;">
+	<li class="first" style="margin-left: 29%;">        <a style="margin: 5%; padding: 1%; min-height: 0px; width: 150px; line-height: 40px;">Web</a>
+	    <ul class="menu_level_1" style="top: 50px; box-shadow: none; background-color: #fff;">
+	    <li class="first">        <a style="margin: 5%; padding: 1%; min-height: 0px; width: 150px; line-height: 40px;">Host</a></li>
+	    <li>        <a style="margin: 5%; padding: 1%; min-height: 0px; width: 150px; line-height: 40px;">Viewer</a></li>
+	    </ul>
+	</li>
+	<li class="last" style="margin-left: 7%;">        <a style="margin: 5%; padding: 1%; min-height: 0px; width: 150px; line-height: 40px;">iOS</a>
+	    <ul class="menu_level_1" style="top: 50px; box-shadow: none; background-color: #fff;">
+	    <li class="first">        <a style="margin: 5%; padding: 1%; min-height: 0px; width: 150px; line-height: 40px;">Host</a></li>
+	    <li>        <a style="margin: 5%; padding: 1%; min-height: 0px; width: 150px; line-height: 40px;">Viewer</a></li>
+	    </ul>
+	</li>
+	</ul>
+</div>
+{#
+<div id="msm-link">
+<form style="display: inline" action="/create-token/drew/2_MX40NDUxNjkzMn5-MTQ0Mjc1Njg1NzM0MH4yeHhkY3ZER2pjWHNQTVBIeUhYRVdXMjh-fg" method="get">
+  <button>click for LIVE EVENT</button>
+</form>
+</div> 
+      
+<div id="msm-link-ios">
+<form style="display: inline" action="/create-token-ios/drew/2_MX40NDUxNjkzMn5-MTQ0Mjc1Njg1NzM0MH4yeHhkY3ZER2pjWHNQTVBIeUhYRVdXMjh-fg" method="get">
+  <button>CLICK TO VIEW LIVE INTERACTIVE ON IOS</button>
+</form>
+
+<div id="ios-app">
+<form style="display: inline" action="https://itunes.apple.com/us/app/mysecuremeeting/id903225248?mt=8" method="get">
+  <button style="font-size: 1em">Download MYSECUREMEETING App to view the LIVE feed on your IOS device</button>
+</form>
+
+</div>
+</div>
+  #}    
+
+{% endblock %}
+
+{% block footer %}
+    <div id="msm-chat">
+    </div>
+{% endblock %}

@@ -1,0 +1,22 @@
+msmBundle\Entity\sessions:
+    type: entity
+    table: null
+    repositoryClass: msmBundle\Entity\sessionsRepository
+    id:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+    fields:
+        sessionName:
+            type: string
+            length: 255
+            column: session_name
+        sessionid:
+            type: string
+            length: 255
+        sessionDate:
+            type: datetime
+            column: session_date
+    lifecycleCallbacks: {  }

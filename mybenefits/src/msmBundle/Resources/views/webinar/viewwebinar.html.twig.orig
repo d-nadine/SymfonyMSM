@@ -1,0 +1,51 @@
+{% extends "::base.html.twig" %}
+
+{% block title %}Collaborich webinar : {{webinar.seminarName}}{% endblock %}
+
+{% block javascripts %}
+    {% javascripts
+    '@msmBundle/Resources/public/js/shaka-player.compiled.js'
+    %}
+    
+      <script>
+    function initPlayer() {
+      shaka.polyfill.installAll();
+      var video = document.getElementById('msmvideo');
+      var player = new shaka.player.Player(video);
+      window.player = player;
+      player.addEventListener('error', function(event) {
+        console.error(event);
+      });
+
+      var mpdUrl = '{{webinar.seminarVideo}}';
+      var estimator = new shaka.util.EWMABandwidthEstimator();
+      var source = new shaka.player.DashVideoSource(mpdUrl, null, estimator);
+
+      player.load(source);
+    }
+    document.addEventListener('DOMContentLoaded', initPlayer);
+  </script>
+
+
+    <script type="text/javascript" src="{{ asset_url }}"></script>
+    {% endjavascripts %}
+
+{% endblock javascripts %}
+
+{% block body %}
+        <div>
+            <video id="msmvideo"
+           width="1020" height="574"
+           crossorigin="anonymous"
+           controls
+           autoplay>
+      Your browser does not support HTML5 video.
+    </video>
+        </div>
+      
+{% endblock %}
+
+{% block footer %}
+    <div id="msm-chat">
+    </div>
+{% endblock %}

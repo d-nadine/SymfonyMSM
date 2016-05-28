@@ -1,0 +1,70 @@
+fos_user:
+    resource: "@FOSUserBundle/Resources/config/routing/all.xml"
+    
+msm_homepage:
+    path:     /
+    defaults: { _controller: msmBundle:Default:index }
+
+create_session:
+    path:     create-session
+    defaults:  
+     _controller: msmBundle:msmSession:createSession 
+     apiKey: 44516932
+     apiSecret: '6aa54cb99b694d28b3b0257db7e1b1a5e25aa19e'
+     
+list_sessions_admin:
+    path:     admin-list-sessions
+    defaults: { _controller: msmBundle:msmSession:listSessionsAdmin }
+    
+list_sessions:
+    path:     list-sessions
+    defaults: { _controller: msmBundle:msmSession:listSessions }
+
+msm_session:
+    path:     msm-session
+    defaults: { _controller: msmBundle:msmSession:msmSession }
+
+create_token:
+    path:     create-token/{name}/{sessionid}
+    defaults: 
+     _controller: msmBundle:msmSession:createToken
+     apiKey: 44516932
+     apiSecret: '6aa54cb99b694d28b3b0257db7e1b1a5e25aa19e'
+     
+admin_token:
+    path:     admin-token/{name}/{sessionid}
+    defaults: 
+     _controller: msmBundle:msmSession:adminToken
+     apiKey: 44516932
+     apiSecret: '6aa54cb99b694d28b3b0257db7e1b1a5e25aa19e'     
+
+ios_token:
+    path:     create-token-ios/{name}/{sessionid}
+    defaults: 
+     _controller: msmBundle:msmSession:iosToken
+     apiKey: 44516932
+     apiSecret: '6aa54cb99b694d28b3b0257db7e1b1a5e25aa19e'
+
+delete_session:
+    path:     delete-session
+    defaults: { _controller: msmBundle:msmSession:deleteSession }
+
+update_session:
+    path:     update-session/{id}
+    defaults: 
+     _controller: msmBundle:msmSession:updateSession
+     requirements:
+        id:  \d+
+
+listwebinar:
+    path:     list-webinar
+    defaults: { _controller: msmBundle:webinar:listwebinar }
+
+createwebinar:
+    path:     create-webinar
+    defaults: { _controller: msmBundle:webinar:createwebinar }
+
+viewwebinar:
+    path:     view-webinar/{id}
+    defaults: { _controller: msmBundle:webinar:viewwebinar }
+      
